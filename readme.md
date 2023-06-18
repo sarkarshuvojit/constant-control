@@ -68,7 +68,8 @@ Although the steps are low on count, they can be highly annoying as for each ste
 
 This tools aims to provide a highly configurable solution which can do all these tasks leaving the developer to focus on their work better. 
 
-![Rough Architecture](./docs/images/Untitled-2023-06-11-1310.svg)
+![Rough Architecture](./docs/images/Untitled-2023-06-11-1310.png)
+
 
 
 ## Configuration
