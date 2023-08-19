@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 
+	"github.com/sarkarshuvojit/pprinter/pprinter"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"golang.org/x/exp/slog"
@@ -15,6 +16,8 @@ import (
 
 var cfgFile string
 var logger slog.Handler
+
+var printer pprinter.Pprinter
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -39,11 +42,13 @@ to quickly create a Cobra application.`,
 			output = io.Discard
 		}
 
+		printer = *pprinter.WithTheme(&pprinter.PastelTheme)
+
 		slog.SetDefault(slog.New(slog.NewTextHandler(output, &slog.HandlerOptions{})))
 
 		slog.Info("Verbose Flag", slog.Bool("verbose", verbose))
 
-		fmt.Println("To get started, try running the command with `--help`")
+		printer.Info("To get started, try running the command with `--help`")
 	},
 }
 
