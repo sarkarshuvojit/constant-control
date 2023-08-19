@@ -10,8 +10,5 @@ test:
 build:
 	@go build -o .bin/cosntant-control-$(BRANCH)-$(HASH)
 
-run:
-	@air
-
 build-image:
 	@docker build -t sarkarshuvojit/constant-control:local .
