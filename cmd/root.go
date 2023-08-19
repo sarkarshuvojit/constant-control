@@ -5,13 +5,16 @@ package cmd
 
 import (
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"golang.org/x/exp/slog"
 )
 
 var cfgFile string
+var logger slog.Handler
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -25,7 +28,23 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		verbose, _ := cmd.PersistentFlags().GetBool("verbose")
+
+		var output io.Writer
+
+		if verbose {
+			output = os.Stdout
+		} else {
+			output = io.Discard
+		}
+
+		slog.SetDefault(slog.New(slog.NewTextHandler(output, &slog.HandlerOptions{})))
+
+		slog.Info("Verbose Flag", slog.Bool("verbose", verbose))
+
+		fmt.Println("To get started, try running the command with `--help`")
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -42,6 +61,8 @@ func init() {
 
 	// Load Custom Config
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "custom config file (default is $HOME/.constant-control.yaml)")
+
+	rootCmd.PersistentFlags().BoolP("verbose", "v", false, "show me under the hood")
 
 }
 

@@ -8,7 +8,13 @@ test:
 	@go test ./...
 
 build:
-	@go build -o .bin/cosntant-control-$(BRANCH)-$(HASH)
+	@go build -o .bin/constant-control-$(BRANCH)
+
+run:
+	@go build -o .bin/constant-control-$(BRANCH) && ./.bin/constant-control-$(BRANCH)
 
 build-image:
 	@docker build -t sarkarshuvojit/constant-control:local .
+
+run-help:
+	@go build -o .bin/constant-control-$(BRANCH) && ./.bin/constant-control-$(BRANCH) --help
