@@ -4,10 +4,10 @@ Copyright © 2023 Shuvojit Sarkar <s15sarkar@yahoo.com>
 package cmd
 
 import (
-	"fmt"
 	"io"
 	"os"
 
+	"github.com/sarkarshuvojit/constant-control/util"
 	"github.com/sarkarshuvojit/pprinter/pprinter"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -42,13 +42,11 @@ to quickly create a Cobra application.`,
 			output = io.Discard
 		}
 
-		printer = *pprinter.WithTheme(&pprinter.PastelTheme)
-
 		slog.SetDefault(slog.New(slog.NewTextHandler(output, &slog.HandlerOptions{})))
 
 		slog.Info("Verbose Flag", slog.Bool("verbose", verbose))
 
-		printer.Info("To get started, try running the command with `--help`")
+		util.Printer.Info("To get started, try running the command with `--help`")
 	},
 }
 
@@ -77,12 +75,12 @@ func initConfig() {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
 	} else {
-		// Find home directory.
-		home, err := os.UserHomeDir()
+		// Find pwd directory.
+		pwd, err := os.Getwd()
 		cobra.CheckErr(err)
 
 		// Search config in home directory with name ".constant-control" (without extension).
-		viper.AddConfigPath(home)
+		viper.AddConfigPath(pwd)
 		viper.SetConfigType("yaml")
 		viper.SetConfigName(".constant-control")
 	}
@@ -91,6 +89,6 @@ func initConfig() {
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
+		slog.Debug("Using config file: %s", viper.ConfigFileUsed())
 	}
 }

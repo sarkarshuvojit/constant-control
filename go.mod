@@ -3,6 +3,7 @@ module github.com/sarkarshuvojit/constant-control
 go 1.20
 
 require (
+	github.com/sarkarshuvojit/pprinter v0.0.2
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
 )
@@ -16,7 +17,6 @@ require (
 	github.com/muesli/reflow v0.3.0 // indirect
 	github.com/muesli/termenv v0.15.1 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	github.com/sarkarshuvojit/pprinter v0.0.2 // indirect
 )
 
 require (

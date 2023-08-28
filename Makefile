@@ -18,3 +18,6 @@ build-image:
 
 run-help:
 	@go build -o .bin/constant-control-$(BRANCH) && ./.bin/constant-control-$(BRANCH) --help
+
+install:
+	@go build && go install
